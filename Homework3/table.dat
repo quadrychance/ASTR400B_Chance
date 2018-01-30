@@ -1,0 +1,8 @@
+\begin{table}
+\begin{tabular}{cccccc}
+Galaxy Name & Halo Mass & Disk Mass & Bulge Mass & Baryon Fraction & Total Mass \\
+Milky Way & 1.974925 & 0.075 & 0.010005 & 0.0412659653483 & 2.05993 \\
+M31 & 1.92088 & 0.12 & 0.01904997 & 0.0675022801867 & 2.05992997 \\
+M33 & 0.186613 & 0.0093 & 0.0 & 0.0474700504816 & 0.195913 \\
+\end{tabular}
+\end{table}
