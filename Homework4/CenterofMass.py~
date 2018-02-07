@@ -1,0 +1,77 @@
+# Homework 4
+# Center of Mass Position and Velocity
+
+# import modules
+import numpy as np
+import astropy.units as u
+from ReadFile import Read
+
+
+class CenterOfMass:
+
+    def __init__(self, filename, ptype):
+        # read in the file and particle type
+        self.time, self.total, self.data = Read('MW_000.txt')
+
+        #create an array to store indexes of particles of desired Ptype
+        self.index = np.where(self.data['type'] == ptype)
+
+        # store the mass, positions, velocities of only the particles of the given type
+        self.m = self.data['m'][self.index]
+
+        ##### PLACE other particle properties here: x,y,z,vx,vy,vz #####
+
+
+
+        self.x = self.data['x'][self.index]*u.kpc
+        self.y = self.data['y'][self.index]*u.kpc
+        self.z = self.data['z'][self.index]*u.kpc
+        self.vx = self.data['vx'][self.index]*u.km/u.s
+        self.vy = self.data['vy'][self.index]*u.km/u.s
+        self.vz = self.data['vz'][self.index]*u.km/u.s
+
+
+
+        #return  xnew, ynew, znew, vxnew, vynew, vznew,
+    def total_mass(self):
+        #Note: you can add other keyword arguments into the function, but 'self' must be first
+        return np.sum(self.m)*u.Msun*1e10
+
+    ##### PLACE OTHER FUNCTIONS BELOW #####
+
+    def COMdefine(self, i,j,k,m):
+        xcom = (i*self.m)/(total_mass(self.m))
+        ycom = (j*self.m)/(total_mass(self.m))
+        zcom = (k.z*self.m)/(total_mass(self.m))
+        return [xcom,ycom,zcom]
+        print(xcom)
+    def COM_P(self,delta):
+
+        com_pos = self.COMdefine(self,x,y,z,m)
+        rcom2 = 1000
+        delta = 10
+        while (rcom2>delta):
+            rcom = np.sqrt(com_pos[0]**2+com_pos[1]**2+com_pos[1]**2)
+
+            rnew = np.sqrt([(xnew-com_pos[0]**2),(ynew-com_pos[1]**2),(znewcom_pos[1]**2)])
+
+            rmax = (rcom-rnew)/2
+            rcom2 = rcom-rmax
+        else:
+            return(rcom2)
+            print(rcom2)
+
+
+
+
+
+# EXAMPLE OF USING A CLASS
+##########################
+
+# Create a Center of mass object for the MW
+MWCOM = CenterOfMass("MW_000.txt", 2)
+
+# Calculate quantities for MW data
+MW_mass = MWCOM.total_mass()
+MW_vec = MWCOM.COM_P()
+print("MW Disk Mass:", MW_mass)
