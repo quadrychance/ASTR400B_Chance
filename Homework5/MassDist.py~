@@ -1,0 +1,114 @@
+
+import numpy as np
+import astropy.units as u
+from ReadFile import Read
+from astropy.table import Table
+from astropy.io import ascii
+from astropy.constants import G
+from CenterofMass import CenterOfMass
+
+
+
+
+
+class MassProfile:
+
+    def __init__(self, galaxy, snap):
+        # read in the file and particle type
+        self.time, self.total, self.data = Read(filename)
+
+        ilbl = '000' + str(snap)
+
+        ilbl = ilbl[-3:]
+        self.filename = '%s_'%(galaxy) + ilbl + '.txt'
+
+
+
+
+
+        self.gname = self.galaxy
+        radii = np.linspace(.01, 30, 1)
+        def MassEnclosed(self, ptype, radii):
+
+             self.index = np.where(self.data['type'] == ptype)
+             self.m = self.data['m'][self.index]
+
+             self.x = self.data['x'][self.index]#*u.kpc
+             self.y = self.data['y'][self.index]#*u.kpc
+             self.z = self.data['z'][self.index]#*u.kpc
+
+
+
+             COM1 = CenterOfMass(self.filename, ptype)
+
+             R = COM1.COM_P(10)
+             xnew = self.x - R[0]
+             ynew = self.y - R[1]
+             znew = self.z - R[2]
+
+             mass_enclosed = np.zeros(np.size(radii))
+             rnew = sqrt(xnew**2+ynew**2+znew**2)
+             for i in range(np.size(radii)):
+                 r_enc = np.where(radii[i] > rnew)
+                 mass_enclosed[i] = np.sum(self.m[r_enc])
+
+
+
+                 return(mass_enclosed)
+
+
+
+
+        def MassEnclosedTotal(self, radii):
+            return MassEnclosed(1, radii) + MassEnclosed(2, radii) + MassEnclosed(3, radii)
+
+
+
+
+        def HernquistMass(self,radii ,a ,Mhalo):   #function returns the hernquist mass profile
+
+
+            return (Mhalo*radii**2)/(a + radii)**2
+
+        def CircularVelocity(self, ptype, radii):
+
+
+            return(sqrt(MassEnclosedTotal(radii)*G/radii))
+
+
+        def HernquistVCirc(self, radii, a, Mhalo):
+
+
+            return((Mhalo*radii**2)/(a + radii)**2*G/radii**2)
+
+r_mp = np.linspace(.1,30,1)
+
+MW_mp = MassProfile(MW, 000)
+M31_mp = MassProfile(M31, 000)
+M33_mp = MassProfile(M33, 000)
+
+plt.subplot(211)
+plt.plot(r_mp, MW_mp.MassEnclosed(1, r_p), c = 'k')
+plt.plot(r_mp, MW_mp.MassEnclosed(2, r_p), c = 'k')
+plt.plot(r_mp, MW_mp.MassEnclosed(3, r_p), c = 'k')
+plt.yscale('log')
+plt.title('MW')
+
+plt.subplot(212)
+plt.plot(r_mp, M31_mp.MassEnclosed(1, r_p), c = 'b')
+plt.plot(r_mp, M31_mp.MassEnclosed(2, r_p), c = 'b')
+plt.plot(r_mp, M31_mp.MassEnclosed(3, r_p), c = 'b')
+plt.yscale('log')
+plt.title('M31')
+
+plt.subplot(213)
+plt.plot(r_mp, M33_mp.MassEnclosed(1, r_p), c = 'r')
+plt.plot(r_mp, M33_mp.MassEnclosed(2, r_p), c = 'r')
+plt.plot(r_mp, M33_mp.MassEnclosed(3, r_p), c = 'r')
+plt.yscale('log')
+plt.title('M33')
+plt.xlabel(radius (kpc))
+
+plt.plot(r_mp, MW_mp.MassEnclosed(r_p)+M31_mp.MassEnclosed(r_p)+MW_33.MassEnclosed(r_p))
+
+plt.yscale('log')

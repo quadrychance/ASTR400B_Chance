@@ -1,0 +1,61 @@
+# Homework 4 
+# Center of Mass Position and Velocity
+
+# import modules
+import numpy as np
+import astropy.units as u
+from ReadFile import Read
+
+
+class CenterOfMass:
+   
+    def __init__(self, filename, ptype):
+        # read in the file and particle type
+        self.time, self.total, self.data = Read(filename)
+            
+        #create an array to store indexes of particles of desired Ptype
+        self.index = np.where(self.data['type'] == ptype)
+    
+        # store the mass, positions, velocities of only the particles of the given type
+        self.m = self.data['m'][self.index]
+    
+        ##### PLACE other particle properties here: x,y,z,vx,vy,vz #####
+ 
+    
+
+        xnew = self.data['x'][self.index]*u.kpc
+        ynew = self.data['y'][self.index]*u.kpc
+        znew = self.data['z'][self.index]*u.kpc
+        vxnew = self.data['vx'][self.index]*u.km/u.s
+        vynew = self.data['vy'][self.index]*u.km/u.s
+        vznew = self.data['vz'][self.index]*u.km/u.s
+ 
+        R3D = np.round(np.sqrt(xnew[PNum-1]**2 + ynew[PNum-1]**2 + znew[PNum-1]**2),3)
+    
+  
+        V3D = np.round(np.sqrt(vxnew[PNum-1]**2 + vynew[PNum-1]**2 + vznew[PNum-1]**2),3)
+    
+   
+        Mass = np.round(m.self[PNum-1],3)
+        
+    return R3D, V3D, Mass
+    def total_mass(self):
+        #Note: you can add other keyword arguments into the function, but 'self' must be first
+        return np.sum(self.m)*u.Msun*1e10
+        
+    ##### PLACE OTHER FUNCTIONS BELOW #####
+
+    def COMdefine(self,xnew,ynew,znew):
+        xcom = (xnew*Mass)
+
+
+
+# EXAMPLE OF USING A CLASS
+##########################
+
+# Create a Center of mass object for the MW
+MWCOM = CenterOfMass("MW_000.txt", 2)
+
+# Calculate quantities for MW data
+MW_mass = MWCOM.total_mass()
+print("MW Disk Mass:", MW_mass)
