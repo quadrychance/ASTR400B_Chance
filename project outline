@@ -1,0 +1,12 @@
+1. Bulge-disk decomposition.
+	- fit Sersic profiles for bulge and stellar disk particle seperately.
+	-take radial shells of the remnant
+	- M~L
+	- maybe make "isophote" contours?
+	use scipy.optimize?
+
+2. Velocity dispersions
+
+	after flipping the galaxy get 3d(1d?) velocities and analytic circular velocities
+	- compare bulge to disk particles to see what elliptical should look like
+	- compare dispersions to circular velocities
