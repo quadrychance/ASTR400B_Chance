@@ -1,0 +1,5 @@
+2. They diverge wildly after the first orbit.
+
+3. Theres something acting as a dissipative force on m33 in the simulation that isn't present in the analytical solution.
+
+4. Add in accelerations from the MW in sperate fucntions, then add them in the total acceleration of M33.
